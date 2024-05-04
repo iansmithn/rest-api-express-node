@@ -5,6 +5,8 @@ import cookieParser from "cookie-parser";
 import compression from "compression";
 import cors from "cors";
 import mongoose from "mongoose";
+import * as dotenv from "dotenv";
+dotenv.config();
 
 import router from "./router";
 
@@ -26,11 +28,8 @@ server.listen(8080, () => {
   console.log("Server running on http://localhost:8080/");
 });
 
-const MONGO_URL =
-  "mongodb+srv://iansmith:40password@cluster0.atrx5m0.mongodb.net/";
-
 mongoose.Promise = Promise;
-mongoose.connect(MONGO_URL);
+mongoose.connect(process.env.DB_URL);
 mongoose.connection.on("error", (error: Error) => console.log(error));
 
 app.use("/", router());
